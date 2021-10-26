@@ -288,6 +288,7 @@ public class Ui {
         show(FinanceUI.statementOpening);
         show(FinanceUI.headersUI[0]);
         int i;
+        FinanceManager.runNetAmountsCheck(cashFlowStatement);
         for (i = 0; i < cashFlowStatement.size(); i++) {
             switch (i) {
             case FinanceManager.endOfOA:
@@ -300,6 +301,8 @@ public class Ui {
                 show(FinanceUI.netAmountsUI[1] + " " + FinanceManager.netIA);
                 show(FinanceUI.headersUI[2]);
                 break;
+            case FinanceManager.freeCashFlow:
+                break;
             default:
                 show(FinanceUI.cashFlowUI[i] + cashFlowStatement.get(i));
                 break;
@@ -307,6 +310,8 @@ public class Ui {
         }
         if (i == cashFlowStatement.size()) {
             show(FinanceUI.netAmountsUI[2] + " " + FinanceManager.netFA);
+            show(FinanceUI.headersUI[6]);
+            show(FinanceUI.cashFlowUI[9] + " " + cashFlowStatement.get(9));
         }
         show(LINE);
     }
@@ -361,15 +366,32 @@ public class Ui {
             break;
         case FinanceManager.endOfFA:
             show(FinanceUI.netAmountsUI[2] + " " + FinanceManager.netFA);
+            show("\n" + "next, please enter " + FinanceUI.cashFlowUI[cashFlowStage + 1]);
+            break;
+        case FinanceManager.freeCashFlow:
+            show("");
             break;
         default:
             show("\n" + "next, please enter " + FinanceUI.cashFlowUI[cashFlowStage + 1]);
             break;
         }
 
-        if (cashFlowStage == 8) {
+        if (cashFlowStage == 9) {
             printCashFlowComplete();
         }
+        show(LINE);
+    }
+
+    public static void printProjections(double finalGrowthValue, ArrayList<Double> cooperProjections) {
+        show(LINE);
+        show("At your current rate of profitability growth in Free Cash Flow,"
+                + " these are future year's projections:");
+        int yearCount = 1;
+        for (int i = 0; i < cooperProjections.size(); i++) {
+            show(yearCount + " year: " + cooperProjections.get(i).intValue());
+            yearCount++;
+        }
+        show("After " + (yearCount - 1) + " years you can expect Free Cash Flow of " + (int)finalGrowthValue);
         show(LINE);
     }
 

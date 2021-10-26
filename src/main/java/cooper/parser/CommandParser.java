@@ -14,21 +14,23 @@ import com.dopsun.chatbot.cli.ParseResult;
 import com.dopsun.chatbot.cli.Parser;
 
 import cooper.command.AddCommand;
+import cooper.command.AvailabilityCommand;
 import cooper.command.AvailableCommand;
 import cooper.command.BsCommand;
 import cooper.command.CfCommand;
 import cooper.command.Command;
 import cooper.command.ExitCommand;
+import cooper.command.HelpCommand;
 import cooper.command.ListCommand;
-import cooper.command.AvailabilityCommand;
 import cooper.command.LogoutCommand;
 import cooper.command.MeetingsCommand;
-import cooper.command.HelpCommand;
 import cooper.command.PostAddCommand;
 import cooper.command.PostCommentCommand;
-import cooper.command.PostListCommand;
 import cooper.command.PostDeleteCommand;
+import cooper.command.PostListCommand;
+import cooper.command.ProjectionCommand;
 import cooper.command.ScheduleCommand;
+import cooper.exceptions.InvalidAccessException;
 import cooper.exceptions.InvalidCommandFormatException;
 import cooper.exceptions.UnrecognisedCommandException;
 import cooper.ui.Ui;
@@ -100,6 +102,7 @@ public class CommandParser extends ParserBase {
         case "available":
         case "post":
         case "schedule":
+        case "proj":
             return parseComplexInput(input);
         default:
             throw new UnrecognisedCommandException();
@@ -126,9 +129,6 @@ public class CommandParser extends ParserBase {
         case "bs":
             financeFlag = FinanceCommand.BS;
             return new BsCommand();
-        case "proj":
-            financeFlag = FinanceCommand.PROJ;
-            return null;
         default:
             throw new UnrecognisedCommandException();
         }
@@ -157,6 +157,9 @@ public class CommandParser extends ParserBase {
                 return parsePostCommentArgs(commandArgs);
             case "postList":
                 return parsePostListArgs(commandArgs);
+            case "proj":
+                financeFlag = FinanceCommand.PROJ;
+                return parseProjectionArgs(commandArgs);
             default:
                 throw new UnrecognisedCommandException();
             }
@@ -342,5 +345,23 @@ public class CommandParser extends ParserBase {
             }
         }
         return new PostListCommand(postId);
+    }
+
+    private Command parseProjectionArgs(List<Argument> commandArgs) throws InvalidCommandFormatException,
+            NumberFormatException {
+        int years = 0;
+
+        for (Argument a : commandArgs) {
+            String argName = a.name();
+            String argVal = a.value().get();
+            switch (argName) {
+            case "years-hint":
+                years = Integer.parseInt(argVal);
+                break;
+            default:
+                throw new InvalidCommandFormatException();
+            }
+        }
+        return new ProjectionCommand(years, financeFlag);
     }
 }

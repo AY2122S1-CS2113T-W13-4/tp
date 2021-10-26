@@ -21,9 +21,10 @@ public class FinanceUI {
         "Decrease in Accounts Payable  ",
         "Decrease in Inventory  ",
         "Capital Expenditures  ",
-        "Proceeds from sale of equipment  ",
+        "Proceeds from Sale of Equipment  ",
         "Proceeds from Issuing Debt  ",
-        "Dividends Paid  "
+        "Dividends Paid  ",
+        "Last Year's Free Cash Flow  "
     };
 
     public static final String[] balanceSheetUI = new String[] {
@@ -36,7 +37,7 @@ public class FinanceUI {
         "Accounts Payable  ",
         "Accrued Expenses  ",
         "Unearned Revenue  ",
-        "Long-term debt  ",
+        "Long-term Debt  ",
         "Equity Capital  ",
         "Retained Earnings  "
     };
@@ -47,7 +48,8 @@ public class FinanceUI {
         "-----CASH FLOW FROM FINANCING ACTIVITIES-----",
         "-----ASSETS-----",
         "-----LIABILITIES-----",
-        "-----SHAREHOLDER'S EQUITY-----"
+        "-----SHAREHOLDER'S EQUITY-----",
+        "-----FREE CASH FLOW-----"
     };
 
     public static final String[] netAmountsUI = new String[] {

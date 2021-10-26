@@ -40,9 +40,11 @@ public class ListCommand extends Command {
             throw new InvalidAccessException();
         }
         
-        if (financeFlag == FinanceCommand.BS && financeManager.cooperBalanceSheet != null) {
+        if (financeFlag == FinanceCommand.BS
+                && financeManager.cooperCashFlowStatement.getCashFlowStatement() != null) {
             Ui.printBalanceSheet(financeManager.cooperBalanceSheet.getBalanceSheet());
-        } else if (financeFlag == FinanceCommand.CF && financeManager.cooperCashFlowStatement != null) {
+        } else if (financeFlag == FinanceCommand.CF
+                && financeManager.cooperCashFlowStatement.getCashFlowStatement() != null) {
             Ui.printCashFlowStatement(financeManager.cooperCashFlowStatement.getCashFlowStatement());
         } else {
             Ui.showListNotFoundException();
